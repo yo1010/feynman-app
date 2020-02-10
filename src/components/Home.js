@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import store from '../store/store';
 import styled from 'styled-components';
 import AddMenu from './AddMenu';
+import { Link } from 'react-router-dom';
+import { getOpenCard } from '../actions/actions';
 
 export default class Home extends Component {
     constructor() {
         super();
         this.storeState = store.getState();
+        this.keyCounter = 0;
         this.state = {
             addMenuTopicInput: this.storeState.menuTopicInput
         };
@@ -15,26 +18,30 @@ export default class Home extends Component {
         store.subscribe(() => {
             this.storeState = store.getState();
             console.log('state changed');
-            this.setState({addMenuTopicInput: this.storeState.menuTopicInput})
-            console.log(this.state.addMenuTopicInput)
+            this.setState({addMenuTopicInput: this.storeState.menuTopicInput, ...this.state.addMenuTopicInput})
         });
     };
     render() {
         return (
             <HomeWrapper>
-                <div className="row ml-5">{this.state.addMenuTopicInput.map(item => {
-                    return (
-                        <div className="note">
-                            <div className="noteHeader">
-                                <h1 align="center">{item}</h1>
-                            </div>
-                            <div className="noteFooter">
-                                <h2 align="center" className="noteTopic">topic</h2>
-                            </div>
-                        </div>
-                    )   
+                <div className="row ml-5">{
+                    this.state.addMenuTopicInput.map(item => {
+                        if (item.titleInput !== undefined && item.topicInput !== undefined) {
+                            return (
+                                <Link className="cardLink" to={`/${item.titleInput}`} key={`cardLink ${this.state.addMenuTopicInput.indexOf(item)}`}>
+                                    <div className="note" key={`cardItem ${this.state.addMenuTopicInput.indexOf(item)}`} onClick={() => store.dispatch(getOpenCard(item))}>
+                                        <div className="noteHeader">
+                                            <h1 align="center">{item.titleInput}</h1>
+                                        </div>
+                                        <div className="noteFooter">
+                                            <h2 align="center" className="noteTopic">{item.topicInput}</h2>
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        }
                 })}</div>
-                <AddMenu />
+                <AddMenu placeholder1="Title..." placeholder2="Topic..."/>
             </HomeWrapper>
         );
     }
@@ -65,6 +72,9 @@ const HomeWrapper = styled.div`
             padding-right: 0.3rem;
         }
         transition: box-shadow 0.5s;
+    }
+    cardLink {
+        text-decoration: none;
     }
     .note: hover {
         box-shadow: 2px 2px 4px;

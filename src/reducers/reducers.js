@@ -1,8 +1,9 @@
-import { PRIORITY_TRUE, MENU_TOPIC_INPUT } from '../actions/actions';
+import { PRIORITY_TRUE, MENU_TOPIC_INPUT, GET_OPEN_CARD } from '../actions/actions';
 
 const initialState = {
     priorityClicked: false,
-    menuTopicInput: ["object oriented programming", "functional programming"]
+    menuTopicInput: [{titleInput: "calculus", topicInput: "maths"}],
+    openCard: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -22,8 +23,13 @@ function rootReducer(state = initialState, action) {
         case MENU_TOPIC_INPUT:
             return {
                 ...initialState,
-                menuTopicInput: [...action.menuTopicInput, ...state.menuTopicInput]
+                menuTopicInput: [...state.menuTopicInput, action.menuTopicInput]
             };
+        case GET_OPEN_CARD:
+            return {
+                ...initialState,
+                openCard: action.openCard
+            }
         default:
             return state;
     };
