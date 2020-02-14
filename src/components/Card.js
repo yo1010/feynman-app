@@ -14,15 +14,15 @@ export default class Card extends Component {
     componentDidMount() {
         store.subscribe(() => {
             this.storeState = store.getState();
-            console.log(this.storeState.openCard.titleInput);
+            console.log(this.storeState);
         })
     }
     render() {
         return (
             <CardWrapper>
                 <div className="row cardHeader">
-                    <div className="cardTitle mx-auto">Title: <span className="nameColor">{this.storeState.openCard.titleInput}</span></div>
-                    <div className="cardTopic mx-auto">Topic: <span className="nameColor">{this.storeState.openCard.topicInput}</span></div>
+                    <div className="cardTitle mx-auto">Title: <span className="nameColor">{this.storeState.openCard.title}</span></div>
+                    <div className="cardTopic mx-auto">Topic: <span className="nameColor">{this.storeState.openCard.topic}</span></div>
                 </div>
                 <div className="row flexbox">
                     <Section id="section-1" className="section col knownSection" header="Known">
@@ -40,7 +40,7 @@ export default class Card extends Component {
                     </Section>
                 </div>
                 <AddMenu placeholder1="Concept..." placeholder2="Comment..." cardMenu={true} />
-                <Link className="homeLink" to="/"><button className="homeButton"><i className="fas fa-home"></i></button></Link>
+                <Link to="/"><button className="homeButton"><i className="fas fa-home"></i></button></Link>
             </CardWrapper>
         )
     }

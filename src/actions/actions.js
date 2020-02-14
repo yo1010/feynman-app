@@ -21,3 +21,9 @@ export const ADD_KNOWN_WORD_INPUT = "ADD_KNOWN_WORD_INPUT";
 export function getWordInput(inputValue) {
     return {type: ADD_KNOWN_WORD_INPUT,  }
 }
+
+export const GET_FIREBASE_DATA = "GET_FIREBASE_DATA";
+
+export function getFirebaseData(value) {
+    return {type: GET_FIREBASE_DATA, fbData: value}
+}

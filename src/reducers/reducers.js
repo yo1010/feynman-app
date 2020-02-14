@@ -1,8 +1,8 @@
-import { PRIORITY_TRUE, MENU_TOPIC_INPUT, GET_OPEN_CARD } from '../actions/actions';
+import { PRIORITY_TRUE, MENU_TOPIC_INPUT, GET_OPEN_CARD, GET_FIREBASE_DATA } from '../actions/actions';
 
 const initialState = {
     priorityClicked: false,
-    menuTopicInput: [{titleInput: "calculus", topicInput: "maths"}],
+    menuTopicInput: [],
     openCard: {}
 };
 
@@ -23,12 +23,17 @@ function rootReducer(state = initialState, action) {
         case MENU_TOPIC_INPUT:
             return {
                 ...initialState,
-                menuTopicInput: [...state.menuTopicInput, action.menuTopicInput]
+                menuTopicInput: [action.menuTopicInput, ...state.menuTopicInput]
             };
         case GET_OPEN_CARD:
             return {
                 ...initialState,
                 openCard: action.openCard
+            }
+        case GET_FIREBASE_DATA:
+            return {
+                ...initialState,
+                menuTopicInput: [...action.fbData, ...state.menuTopicInput]
             }
         default:
             return state;

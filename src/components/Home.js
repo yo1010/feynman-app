@@ -3,7 +3,7 @@ import store from '../store/store';
 import styled from 'styled-components';
 import AddMenu from './AddMenu';
 import { Link } from 'react-router-dom';
-import { getOpenCard } from '../actions/actions';
+import { getOpenCard, getFirebaseData } from '../actions/actions';
 
 export default class Home extends Component {
     constructor() {
@@ -11,30 +11,34 @@ export default class Home extends Component {
         this.storeState = store.getState();
         this.keyCounter = 0;
         this.state = {
-            addMenuTopicInput: this.storeState.menuTopicInput
+            menuTopicInput: []
         };
     };
     componentDidMount() {
         store.subscribe(() => {
             this.storeState = store.getState();
-            console.log('state changed');
-            this.setState({addMenuTopicInput: this.storeState.menuTopicInput, ...this.state.addMenuTopicInput})
+            this.setState(() => {
+                return {
+                    menuTopicInput: this.storeState.menuTopicInput, ...this.state.menuTopicInput
+                }
+            })
         });
     };
     render() {
+        console.log(this.state.menuTopicInput)
         return (
             <HomeWrapper>
-                <div className="row ml-5">{
-                    this.state.addMenuTopicInput.map(item => {
-                        if (item.titleInput !== undefined && item.topicInput !== undefined) {
+                <div className="row ml-1">{
+                    this.state.menuTopicInput.map(item => {
+                        if (item.title !== undefined && item.topic !== undefined) {
                             return (
-                                <Link className="cardLink" to={`/${item.titleInput}`} key={`cardLink ${this.state.addMenuTopicInput.indexOf(item)}`}>
-                                    <div className="note" key={`cardItem ${this.state.addMenuTopicInput.indexOf(item)}`} onClick={() => store.dispatch(getOpenCard(item))}>
+                                <Link className="cardLink" to={`/${item.title}`} key={`cardLink ${this.state.menuTopicInput.indexOf(item)}`}>
+                                    <div className="note" key={`cardItem ${this.state.menuTopicInput.indexOf(item)}`} onClick={() => store.dispatch(getOpenCard(item))}>
                                         <div className="noteHeader">
-                                            <h1 align="center">{item.titleInput}</h1>
+                                            <h1 align="center">{item.title}</h1>
                                         </div>
                                         <div className="noteFooter">
-                                            <h2 align="center" className="noteTopic">{item.topicInput}</h2>
+                                            <h2 align="center" className="noteTopic">{item.topic}</h2>
                                         </div>
                                     </div>
                                 </Link>

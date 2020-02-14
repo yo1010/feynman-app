@@ -40,15 +40,15 @@ export default class AddMenu extends Component {
                 this.inputObject.knownArray = [];
                 this.inputObject.learnArray = [];
                 this.inputObject.reviseArray = [];
-                this.inputObject.titleInput = this.state.titleInput;
-                this.inputObject.titleInput = this.inputObject.titleInput[0].toUpperCase() + this.inputObject.titleInput.slice(1);
+                this.inputObject.title = this.state.titleInput;
+                this.inputObject.title = this.inputObject.title[0].toUpperCase() + this.inputObject.title.slice(1);
                 this.setState({titleInput: "", titleEntered: true});
                 console.log('entered')
             } 
             if (e.target.className.includes("inputTopic")) {
                 if (this.state.titleEntered === true) {
-                    this.inputObject.topicInput = this.state.topicInput;
-                    this.inputObject.topicInput = this.inputObject.topicInput[0].toUpperCase() + this.inputObject.topicInput.slice(1);
+                    this.inputObject.topic = this.state.topicInput;
+                    this.inputObject.topic = this.inputObject.topic[0].toUpperCase() + this.inputObject.topic.slice(1);
                     this.setState({topicInput: "", topicEntered: true});
                     store.dispatch(menuTopicInput(this.inputObject));
                     this.setState({titleEntered: false, topicEntered: false})
